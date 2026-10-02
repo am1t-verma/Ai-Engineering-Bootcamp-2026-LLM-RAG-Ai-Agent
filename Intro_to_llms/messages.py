@@ -1,12 +1,5 @@
-from dotenv import load_dotenv
-from openai import OpenAI
-load_dotenv()
-import os
-
-client = OpenAI(
-    base_url = "https://openrouter.ai/api/v1",
-    api_key = os.getenv("OPENROUTER_API_KEY")
-)
+from openai import OpenAI  
+client = OpenAI()
 
 messages_example = [
     {
@@ -76,11 +69,9 @@ def binary_search(arr, target):
     }
 ]
 
-completion = client.chat.completions.create(
-    model="z-ai/glm-5.3-flash",
-    messages = messages_example,
-    temperature=0.5,
-    max_tokens=1024,
-)
+response = client.responses.create( 
+    model="openai.gpt-oss-120b", 
+    input = messages_example
+)  
 
-print(completion.choices[0].message.content) 
+print(response.output_text)
